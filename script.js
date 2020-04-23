@@ -1,35 +1,32 @@
+let app = angular.module("myapp", []);
+app.controller('myctrl', function ($scope, $sce) {
 
-	function createSlides()
-	{
-		var html="";
-		timeline.forEach((item,index)=>{
+	$scope.cleanTimeLine = function () {
+		//sort timeline
+		timeline.sort(function (a, b) { return a.year - b.year });
 
-			html+=`<div class="swiper-slide" >`;
-				html+=`<div class="note-holder">`;
-				html+=`<div class="note">`;
-					html+=`${item.text}`;
-					html+=`<div class="year">${item.year} <div class=pageno>  (${index+1}/${timeline.length}) </div> </div>`;
-				html+=`</div>`;
-				html+=`</div>`;
-			html+=`</div>`;
+		//also group similar keys into one
+		let temp = timeline.reduce((acc, curr) => {
+			if (acc.hasOwnProperty(curr.year)) {
+				acc[curr.year] = acc[curr.year].concat("<br>" + curr.text)
+			} else {
+				acc[curr.year] = curr.text
+			}
+			return acc;
+		}, {});
+
+		temp = Object.keys(temp).map((key) => {
+			return {
+				'year': key,
+				'text': temp[key]
+			}
 		});
-		document.querySelector("#parent").innerHTML=html;
+		timeline = temp;
+		return temp;
 	}
-	document.addEventListener("DOMContentLoaded",function(){
-		createSlides();
-		var swiper = new Swiper(".swiper-container", {
-			
-			effect: "coverflow",
-			grabCursor: true,
-			centeredSlides: true,
-			slidesPerView: "auto",
-			coverflow: {
-			  rotate: 50,
-			  stretch: 0,
-			  depth: 100,
-			  modifier: 1,
-			  slideShadows: true },
-		  
-			loop: true });
-		
-	});
+
+	$scope.init = function () {
+		$scope.timeline = $scope.cleanTimeLine();
+			};
+	$scope.init();
+});

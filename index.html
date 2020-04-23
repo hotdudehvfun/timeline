@@ -4,31 +4,24 @@
 <head>
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="icon" href="images/icons/icon-96x96.png" type="image/gif" sizes="16x16">
-
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/3.4.1/js/swiper.min.js"></script>
   <script src="timeline.js"></script>
-
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@900&display=swap" rel="stylesheet">
-
-  <link rel="stylesheet" type="text/css" href="swiper.css">
-  <link rel="stylesheet" type="text/css" href="style.css">
-
+  <link rel="stylesheet" href="style.css"/>
 </head>
 
 <body ng-app="myapp" ng-controller='myctrl'>
   <h1 style="text-align: center;">Timeline</h1>
   <hr style="width: 95%;">
-  
 
+  <div class="horizontal-container">
 
+    <div class="item" ng-repeat="(key,value) in timeline">
+      <div class="year">{{value.year}}</div>
+      <div class="text">{{value.text}}</div>
+    </div>
 
-  <div class="swiper-container">
-    <div class="swiper-wrapper" id="parent"></div>
-    
   </div>
-
-
 
   <script src="script.js"></script>
 </body>
